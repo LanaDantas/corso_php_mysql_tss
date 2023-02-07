@@ -14,3 +14,4 @@ Password: <input type="password" value="segretissimo" name="pasword"><br>
 </body>
 </html>
 
+<!-- curl http://localhost/corso_php_mysql_tss/form_in_php/log-in-response.php?email=sbagliata -->
