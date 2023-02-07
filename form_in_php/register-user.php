@@ -1,16 +1,28 @@
 <?php
 
-$nome = $_POST['first_name'];
-$cognome = $_POST['last_name'];
-$birthday = $_POST['birthday'];
-$birthplace = $_POST['birth_place'];
-$sesso = $_POST['gender'];
-$username = $_POST['username'];
-$password = $_POST['password'];
+$nome = filter_input(INPUT_POST,"first_name");
+$cognome = filter_input(INPUT_POST,"last_name");
+$birthday = filter_input(INPUT_POST,"birthday");
+$birthplace = filter_input(INPUT_POST,"birth_place");
+$sesso = filter_input(INPUT_POST,"gender");
+$username = filter_input(INPUT_POST,"username");
+$password = filter_input(INPUT_POST,"password");
+//  print_r($_POST);
 
-if ($nome == '' or $cognome == '' or $birthday == '' or $birthplace == '' or $sesso == '' or $username == '' or $password == ''){
-    echo "Compilare tutti i campi";
- } else {
-    echo "<h2>Registrazine completata. Benvenuto $username</h2><br />";
- }
-
+if(!$username) {
+    echo "<h2>Username non è valida</h2>";
+      } elseif (!$nome) {
+          echo "<h2>Compilare tutti i campi</h2>";
+        } elseif (!$cognome) {
+            echo "<h2>Compilare tutti i campi</h2>";
+        } elseif (!$birthday) {
+            echo "<h2>Compilare tutti i campi</h2>";
+        } elseif (!$birthplace) {
+            echo "<h2>Compilare tutti i campi</h2>";
+        } elseif (!$sesso) {
+            echo "<h2>Compilare tutti i campi</h2>";
+        } elseif (!$password) {
+            echo "<h2>Inserire una password</h2>";
+     } else {
+        echo "<h2>Grazie, la tua username è valida: $username</h2>";
+}

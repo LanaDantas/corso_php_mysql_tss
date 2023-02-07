@@ -1,60 +1,127 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrazione</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body style="text-align:center;">
-<header class="bg-light p-1" style="text-align:center;">
+    <header class="bg-light p-1">
         <h1 class="display-6" style="text-align:center;">Registrati</h1>
     </header>
     <main class="container">
         <section class="row">
-
-        <form action="register-user.php" method="post">
-            <div class="login__div-1">
-                <p class="register__name">
-                <label for="first_name" class="form-label">Nome: </label>
-                    <input type="text" name="first_name">
-                </p>
-                <p class="register__lastname">
-                    <label for="last_name" class="form-label">Cognome: </label>
-                    <input type="text" name="last_name">
-                </p>
-                <p class="register__birthday">
-                    <label for="birthday" class="form-label">Data di nascita: </label>
-                    <input type="text" name="birthday">
-                </p>
-                <p class="register__birthplace">
-                    <label for="birth_place" class="form-label">Luogo di nascita: </label>
-                    <input type="text" name="birth_place">
-                </p>
-                <p class="register__gender">
-                    <label for="gender" class="form-label">Sesso: </label>
-                    <select class="form-control" name="gender" id="gender">
+            <div class="col-sm-4">
+                <form  class="mt-1 mt-md-5" action="register-user.php" method="post">
+                    <div class="col-sm-3">
+                        <label for="first_name" class="form-label">Nome: </label>
+                        <input type="text" name="first_name" class="form-control">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="last_name" class="form-label">Cognome: </label>
+                        <input type="text" name="last_name" class="form-control">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="birthday" class="form-label">Data di nascita: </label>
+                        <input type="text" name="birthday" class="form-control">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="birth_place" class="form-label">Luogo di nascita: </label>
+                        <input type="text" name="birth_place" class="form-control">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="gender" class="form-label">Sesso: </label>
+                        <select class="form-control" name="gender" id="gender">
                          <option>F</option>
                          <option>M</option>
-                         <option>Altro</option>
-                    </select>
-                </p>
+                        </select>
+                    </div>
                 <br>
-                <p class="register__username">
-                    <label for="username" class="form-label">Nome utente: </label>
-                    <input type="text" name="username">
-                </p>
-                <p class="register__password">
-                    <label for="password" class="form-label">Password: </label>
-                    <input type="password" value="segretissimo" name="password">
-                </p>
-        </div>
+                    <div class="col-sm-3">
+                        <label for="username" class="form-label">Nome utente: </label>
+                        <input type="text" name="username" class="form-control">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="password" class="form-label">Password: </label>
+                        <input type="password" value="segretissimo" name="password" class="form-control">
+                    </div>
+                    <br>
+                    <br>
+            </div>
 
-            <input type="submit" name="submit" value="Submit">
-            <input type="reset" name="reset" value="Reset">
+            <button class="btn btn-primary btn-sm"  type="submit"> Accedi </button>
+
+            </form>
+
+        </section> 
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html> -->
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  </head>
+  <body>
+    <header class="bg-light p-1">
+        <h1 class="display-6">Applicazione demo</h1>
+    </header>
+    <main class="container">
+
+       <section class="row">
+            <div class="col-sm-4">
+                <form  class="mt-1 mt-md-5" action="register-user.php" method="post">
+                    <div class="col-sm-3">
+                        <label for="first_name" class="form-label">Nome: </label>
+                        <input type="first_name" class="form-control" name="first_name" id="first_name">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="last_name" class="form-label">Cognome: </label>
+                        <input type="last_name" class="form-control" name="last_name" id="last_name">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="birthday" class="form-label">Data di nascita: </label>
+                        <input type="birthday" class="form-control" name="birthday" id="birthday">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="birth_place" class="form-label">Luogo di nascita: </label>
+                        <input type="birth_place" class="form-control" name="birth_place" id="birth_place">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="gender" class="form-label">Sesso: </label>
+                        <select type="gender" class="form-control" name="gender" id="gender">
+                         <option>F</option>
+                         <option>M</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="username" class="form-label">Nome utente: </label>
+                        <input type="username" class="form-control" name="username" id="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" name="password" class="form-control">
+                    </div>
+                    
+                    <button class="btn btn-primary btn-sm"  type="submit"> Registrati </button>
+
+            </div>
+       </section> 
     </form>
 
-    </section> 
-</main>
-</body>
+    </main>
+ 
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </body>
 </html>
+
+
