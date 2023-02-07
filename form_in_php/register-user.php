@@ -24,5 +24,5 @@ if(!$username) {
         } elseif (!$password) {
             echo "<h2>Inserire una password</h2>";
      } else {
-        echo "<h2>Grazie, la tua username è valida: $username</h2>";
+        echo "<h2>Grazie $username, la tua username è valida</h2>";
 }
