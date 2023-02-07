@@ -33,7 +33,11 @@
                 </p>
                 <p class="register__gender">
                     <label for="gender" class="form-label">Sesso: </label>
-                    <input type="text" name="gender">
+                    <select class="form-control" name="gender" id="gender">
+                         <option>F</option>
+                         <option>M</option>
+                         <option>Altro</option>
+                    </select>
                 </p>
                 <br>
                 <p class="register__username">
