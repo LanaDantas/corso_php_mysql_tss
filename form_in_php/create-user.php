@@ -98,12 +98,20 @@
                      <input type="birth_place" class="form-control" name="birth_place"  id="birth_place">
                 </div> 
                 <div class="mb-3">
-                <label for="gender" class="form-label">Sesso</label>
-                        <select type="gender" class="form-control" name="gender" id="gender">
-                            <option>F</option>
-                            <option>M</option>
-                        </select>
-                </div> 
+                  <span>Genere</span>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="gender_M">
+                    <label class="form-check-label" for="gender_M">
+                      Maschile
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="gender_F" checked>
+                    <label class="form-check-label" for="gender_F">
+                      Femminile
+                    </label>
+                </div>
+                </div>
                 <div class="mb-3">
                      <label for="username" class="form-label">Nome utente</label>
                      <input type="username" class="form-control" name="username"  id="username">

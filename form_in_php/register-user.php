@@ -4,7 +4,7 @@ $nome = filter_input(INPUT_POST,"first_name");
 $cognome = filter_input(INPUT_POST,"last_name");
 $birthday = filter_input(INPUT_POST,"birthday");
 $birthplace = filter_input(INPUT_POST,"birth_place");
-$sesso = filter_input(INPUT_POST,"gender");
+$gender = filter_input(INPUT_POST,"gender");
 $username = filter_input(INPUT_POST,"username");
 $password = filter_input(INPUT_POST,"password");
 //  print_r($_POST);
@@ -19,7 +19,7 @@ if(!$username) {
             echo "<h2>Compilare tutti i campi</h2>";
         } elseif (!$birthplace) {
             echo "<h2>Compilare tutti i campi</h2>";
-        } elseif (!$sesso) {
+        } elseif (!$gender) {
             echo "<h2>Compilare tutti i campi</h2>";
         } elseif (!$password) {
             echo "<h2>Inserire una password</h2>";
