@@ -91,7 +91,7 @@
                 </div> 
                 <div class="mb-3">
                      <label for="birthday" class="form-label">Data di nascita</label>
-                     <input type="birthday" class="form-control" name="birthday"  id="birthday" value="gg/mm/aa">
+                     <input type=date class="form-control" name="birthday"  id="birthday" step=7 min=2014-09-08>
                 </div> 
                 <div class="mb-3">
                      <label for="birth_place" class="form-label">Luogo di nascita</label>
