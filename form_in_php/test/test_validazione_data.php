@@ -1,19 +1,48 @@
 <?php
-
+require "./form_in_php/class/validator/Validable.php";
 require "./form_in_php/class/validator/ValidateDate.php";
 
-$date = [
-    '19/10/2001',
-    '2000/18/01'
+$testCases = [
+[
+    'input'=>'20/04/1975',
+    'expected'=>'20/04/1975'
+],
+[
+    'input'=>'20/04/1975',
+    'expected'=>'20/04/1975'
+],
+[
+    'input'=>'33/04/1975',
+    'expected'=>false
+],
+[
+    'input'=>'20/04/1975',
+    'expected'=>'20/04/1975'
+],
+[
+    'input'=>'18/33/1975',
+    'expected'=>false
+],
+[
+    'input'=>'dd/04/1975',
+    'expected'=>false
+],
+[
+    'input'=>'',
+    'expected'=>false
+]
+
 ];
 
-$d = new ValidateDate();
-
-foreach($date as $key => $value) {
-    if($d->isValid($value, 'dd-mm-yyyy') == true) {
-        echo "formato corretto [$value]\n";
-    } else {
-        echo "formato non corretto\n";
+foreach($date as $key => $test) {
+    $input = $test['input'];
+    $expected = $test['expected'];
+    $c = new ValidateDate();
+    if($c->isValid($input) != $expected) {
+        echo "\ntest numero $key non superato\n";
+        var_dump($expected);
+        echo "\nnon ha trovato\n";
+        var_dump($c->isValid($input));
     }
 }
 
