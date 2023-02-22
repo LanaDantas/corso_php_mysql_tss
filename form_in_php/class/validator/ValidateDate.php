@@ -1,28 +1,26 @@
 <?php
 
-class ValidateDate {
-    public function isValid($value) {
+class ValidateDate implements Validable {
 
+    public function isValid($value)
+    {
         $sanitize = trim(strip_tags($value));
-
-        $dt = DateTime::createFromFormat('d/m/Y', $sanitize);
-        echo $value."\n";
-        // echo $dt->format('d/m/Y') . " === " . $sanitize ."\n";
-        // print_r($dt && $dt->format('d/m/Y')===$sanitize);
-        echo "\n----------------------------\n"; // die();
-
+        $dt = DateTime::createFromFormat('d/m/Y',$sanitize);
         if($dt && $dt->format('d/m/Y') === $sanitize) {
+
             return $dt->format('d/m/Y');
-        } else {
+        
+        }else{
+        
             return false;
+        
         };
     }
+    
 
-    public function message() {
+    public function message()
+    {
         return 'data non valida';
     }
+
 }
-
-
-
-?>
