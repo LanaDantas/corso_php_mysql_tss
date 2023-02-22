@@ -20,3 +20,5 @@ foreach ($emails as $index => $email) {
     };
 
 } 
+
+?>
