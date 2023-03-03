@@ -5,6 +5,7 @@
 require "./class/validator/Validable.php";
 require "./class/validator/ValidateRequired.php";
 require "./class/validator/ValidateDate.php";
+require "./class/validator/ValidateMail.php";
 
 // print_r($_POST);
 
@@ -13,6 +14,7 @@ $last_name = new ValidateRequired('', 'Il cognome è obbligatorio');
 $birthday = new ValidateDate('', 'Campo obbligatorio');
 $birthplace = new ValidateRequired('', 'Campo obbligatorio');
 $gender = new ValidateRequired('', 'Campo obbligatorio');
+$username = new ValidateMail('', 'Campo obbligatorio');
 
 
 
@@ -23,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $birthday->isValid($_POST['birthday']);
   $birthplace->isValid($_POST['birth_place']);
   $gender->isValid($_POST['gender']);
+  $username->isValid($_POST['username']);
 
 }
 
@@ -131,7 +134,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             <div class="form-check">
               <label class="form-check-label" for="gender_F">Femminile</label>
               <input class="form-check-input <?php echo !$gender->getValid() ? 'is-invalid' : '' ?>" type="radio"
-                value="<?= $gender->getValue() ?>" name="gender" id="gender_F">
+                value="<?= $gender->getValue() ?>"
+                name="gender"
+                id="gender_F">
               <?php
               if (!$gender->getValid()) { ?>
                 <div class="invalid-feedback">
@@ -145,11 +150,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             </div>
             <div class="mb-3">
               <label for="username" class="form-label">nome utente</label>
-              <input type="email" class="form-control <?php echo $isValidUserName ?>" name="username" id="username">
+              <input type="email"
+              value="<?= $username->getValue() ?>"
+              class="form-control <?php echo !$username->getValid() ? 'is-invalid' : '' ?>"
+              name="username"
+              id="username">
+
               <?php
-              if (isset($validatedUserName) && !$validatedUserName) { ?>
+               if (!$username->getValid()) { ?>
                 <div class="invalid-feedback">
-                  il nome utente è obbligatorio | il nome utente deve essere una mail
+                  <?php echo $username->getMessage() ?>
                 </div>
               <?php
               }
