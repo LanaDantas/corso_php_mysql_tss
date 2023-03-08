@@ -20,11 +20,15 @@ try {
     $conn->query('TRUNCATE TABLE provincia');
 
     foreach($province_object as $provincia) {
-        $nome = $provincia->nome;
-        $sigla = $provincia->sigla;
-        $nome_provincia = addslashes($nome);
-        $sigla_provincia = addslashes($sigla);
-        $sql = "INSERT INTO provincia (nome,sigla) VALUES('$nome_provincia','$sigla_provincia');";
+        $regione_id = $provincia->regione;
+        $nome_provincia = addslashes($provincia->nome);
+        $sigla_provincia = addslashes($provincia->sigla);
+
+        $regione_id = $conn->query("SELECT id_regione FROM regione WHERE nome =\"$regione_id\"")->fetchColumn();
+        
+      // $conn->query(("SELECT id_regione FROM regione WHERE nome =\"$regione\"")->get_result()->fetch_all());
+
+        $sql = "INSERT INTO provincia (nome,sigla,id_regione) VALUES('$nome_provincia','$sigla_provincia','$regione_id');";
         echo $sql ."\n";
         $conn->query($sql);
     }
