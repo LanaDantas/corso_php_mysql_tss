@@ -110,18 +110,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             ?>
           </div>
           <div class="mb-3">
-            <label for="birth_place" class="form-label">luogo di nascita</label>
-            <input type="text" value="<?= $birthplace->getValue() ?>"
-              class="form-control <?php echo !$birthplace->getValid() ? 'is-invalid' : '' ?>" name="birth_place"
-              id="birth_place">
-            <?php
-            if (!$birthplace->getValid()) { ?>
-              <div class="invalid-feedback">
-                <?php echo $birthplace->getMessage() ?>
-              </div>
-            <?php
-            }
-            ?>
+          <select name="continente" id="continente" class="continente">
+                <option> Scegli unoa regione </option>
+                <?php load_stati(); ?>
+          </select>
           </div>
           <div class="mb-3">
             <span>Genere</span>

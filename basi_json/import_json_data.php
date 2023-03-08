@@ -14,9 +14,6 @@ foreach ($province_object as $provincia_object) {
     echo $provincia_object->nome." (".$provincia_object->sigla.")\n";
 }
 
-
-
-
 $province_associative_array = json_decode($provincie,true);
 
 print_r($province_associative_array[4]);
