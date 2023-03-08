@@ -1,5 +1,5 @@
 <?php
-include "./config.php";
+include "config.php";
 
 
 function load_stati() { 
@@ -8,7 +8,7 @@ function load_stati() {
         $conn = new PDO($dsn,DB_USER,DB_PASSWORD);
 
         $select_regioni =  $conn->query("SELECT nome from regione")->fetchAll();
-        while ($row = ($select_regioni)) {
+        foreach($select_regioni as $row) {
             echo "<option value=\"".$row['nome']."\">".$row['nome']."</option>\n"; 
         }
         
