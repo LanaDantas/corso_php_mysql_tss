@@ -15,8 +15,12 @@ require "./class/validator/ValidateMail.php";
 $first_name = new ValidateRequired('', 'Il nome è obblicatorio');
 $last_name = new ValidateRequired('', 'Il cognome è obbligatorio');
 $birthday = new ValidateDate('', 'Campo obbligatorio');
-$birthplace = new ValidateRequired('', 'Campo obbligatorio');
 $gender = new ValidateRequired('', 'Campo obbligatorio');
+
+$birthcity = new ValidateRequired('', 'Campo obbligatorio');
+$birthregion = new ValidateRequired('', 'Campo obbligatorio');
+$birthprovince = new ValidateRequired('', 'Campo obbligatorio');
+
 $username = new ValidateMail('', 'Campo obbligatorio');
 
 
@@ -26,8 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $first_name->isValid($_POST['first_name']);
   $last_name->isValid($_POST['last_name']);
   $birthday->isValid($_POST['birthday']);
-  $birthplace->isValid($_POST['birth_place']);
   $gender->isValid($_POST['gender']);
+  $birthcity->isValid($_POST['birth_city']);
+  $birthregion->isValid($_POST['birth_region']);
+  $birthprovince->isValid($_POST['birth_province']);
   $username->isValid($_POST['username']);
 }
 
@@ -105,24 +111,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             <div class="row">
             <div class="col">
               <label for="birth_city" class="form-label">Città di nascita</label>
-              <input type="text" class="form-control" name="birth_city" id="birth_city">
-
+              <input type="text" value="<?= $birthday->getValue() ?>" class="form-control <?php echo !$birthcity->getValid() ? 'is-invalid' : '' ?>" name="birth_city" id="birth_city">
+              <?php
+            if (!$birthcity->getValid()) : ?>
+              <div class="invalid-feedback">
+                <?php echo $birthcity->getMessage() ?>
+              </div>
+            <?php
+            endif ?>
             </div>
 
             <div class="col">
-
               <label for="birth_region" class="form-label">Regione di nascita</label>
-              <select id="birth_region" class="birth_region form-select" name="birth_region">
+              <select value="<?= $birthregion->getValue() ?>" id="birth_region" class="birth_region form-select <?php echo !$birthregion->getValid() ? 'is-invalid' : '' ?>" name="birth_region">
                   <option value=""></option>
                     <?php foreach(Regione::all() as $regione) : ?>
+
+                      <?php if (!$birthcity->getValid()) : ?>
+                          <div class="invalid-feedback">
+                      <?php echo $birthcity->getMessage() ?>
+                          </div>
+                      <?php endif ?>
+
                       <option value="<?= $regione->id ?>"><?= $regione->nome ?></option>
                     <?php endforeach; ?>
+
+
               </select>
             </div>
 
             <div class="col">
               <label for="birth_province" class="form-label">Provincia di nascita</label>
-              <select id="birth_province" class="birth_province form-select" name="birth_province">
+              <select value="<?= $birthprovince->getValue() ?>" id="birth_province" class="birth_province form-select <?php echo !$birthprovince->getValid() ? 'is-invalid' : '' ?>" name="birth_province">
                 <option value=""></option>
                     <?php foreach(Provincia::all() as $provincia) : ?>
                        <option value="<?= $provincia->sigla ?>"><?= $provincia->nome ?></option>
