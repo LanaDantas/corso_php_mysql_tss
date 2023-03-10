@@ -1,4 +1,4 @@
--- Active: 1677862054652@@127.0.0.1@3306
+-- Active: 1677862054652@@127.0.0.1@3306@form_in_php
 use form_in_php;
 
 CREATE TABLE regione (
