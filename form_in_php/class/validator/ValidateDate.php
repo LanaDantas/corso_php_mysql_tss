@@ -1,4 +1,5 @@
 <?php
+namespace validator;
 
 class ValidateDate implements Validable {
     
@@ -17,7 +18,7 @@ class ValidateDate implements Validable {
     {
         $sanitize = trim(strip_tags($date));
         $valueWithoutSpace = trim($sanitize);
-        $dt = DateTime::createFromFormat('d/m/Y',$sanitize);
+        $dt = \DateTime::createFromFormat('d/m/Y',$sanitize);
         if($dt && $dt->format('d/m/Y') === $sanitize && $valueWithoutSpace == '') {
             $this->valid = false;
 

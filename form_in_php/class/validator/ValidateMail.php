@@ -1,10 +1,10 @@
 <?php
+namespace validator;
 
 class ValidateMail implements Validable {
 
     private $email;
     private $message;
-    private $hasMessage;
     private $valid;
     
     public function __construct($default_value = '', $message='è obbligatorio') {
@@ -16,11 +16,6 @@ class ValidateMail implements Validable {
     public function isValid(mixed $email) {
         $strip_tag = strip_tags($email);
         $valueWithoutSpace = trim($strip_tag);
-        if($valueWithoutSpace == '') {
-            $this->valid = false;
-            return false;
-        }
-        $this->email = filter_var($valueWithoutSpace, FILTER_VALIDATE_EMAIL);
         return filter_var($valueWithoutSpace, FILTER_VALIDATE_EMAIL);
     }
 
