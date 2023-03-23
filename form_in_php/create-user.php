@@ -17,8 +17,8 @@ $validatorRunner = new ValidatorRunner([
   'birthday'  => new ValidateDate('','La data di nascità non è valida'),
   'gender'  => new ValidateRequired('','Il Genere è obbligatorio'),
   'birth_city'  => new ValidateRequired('','La città  è obbligatoria'),
-  'birth_region'  => new ValidateRequired('','La regione è obbligatoria'),
-  'birth_province'  => new ValidateRequired('','La provincia è obbligatoria'),
+  'id_regione'  => new ValidateRequired('','La regione è obbligatoria'),
+  'id_propvincia'  => new ValidateRequired('','La provincia è obbligatoria'),
 
   'username'  => new ValidateRequired('','Username è obbligaztorio'),
   // 'username:email'  => new ValidateMail('','Formato email non valido'),
@@ -29,17 +29,19 @@ extract($validatorRunner->getValidatorList());
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   
   $validatorRunner->isValid();
-
+  
   if($validatorRunner->getValid()){
+    print_r($_POST);
+
+    $user = User::arrayToUser($_POST);
+
+    var_dump ($user->id_regione);
 
     $crud = new UserCRUD();
-    $user = User::arrayToUser($_POST);
     $crud->create($user);
-    
+
   }
 }
-
-
 
 ?>
 
@@ -121,8 +123,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="col">
                         
-                        <label for="birth_region" class="form-label">Regione</label>
-                        <select id="birth_region" class="form-select birth_region" name="birth_region">
+                        <label for="id_regione" class="form-label">Regione</label>
+                        <select id="id_regione" class="form-select id_regione" name="id_regione">
                                 <option value=""></option>
                                 <?php foreach(Regione::all() as $regione) : ?> 
                                     <option value="<?= $regione->id_regione ?>"><?= $regione->nome ?></option>
@@ -131,8 +133,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         </div>
                         <div class="col">
-                        <label for="birth_province" class="form-label">Provincia</label>
-                        <select id="birth_province" class="form-select birth_province" name="birth_province">
+                        <label for="id_provincia" class="form-label">Provincia</label>
+                        <select id="id_provincia" class="form-select id_provincia" name="id_provincia">
                         <option value=""></option>
                                 <?php foreach(Provincia::all() as $provincia) : ?> 
                                     <option value="<?= $provincia->id_provincia ?>"><?= $provincia->nome ?></option>
