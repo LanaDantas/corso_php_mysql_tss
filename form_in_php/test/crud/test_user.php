@@ -19,7 +19,6 @@ $user->gender = "M";
 $user->username = "mariorossi@email.com";
 $user->password = md5('Password');
 
-
 $result = $crud->read();
 if ($result == false) {
     echo "\ndatabase iniziale vuoto\n";
@@ -49,13 +48,6 @@ if (is_array($result) && count($result) === 1) {
 // if($result === false) {
 //     echo "\nutente con id 1 è stato eliminato";
 // }
-
-$crud->update(1);
-$result = $crud->read(1);
-if(is_array($result) && count($result) === 1) {
-    echo "\nutente con id 1 è stato aggiornato";
-}
-print_r($result);
 
 
 
