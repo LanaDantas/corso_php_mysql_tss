@@ -22,7 +22,7 @@
 
     $crud->create($user);
     $user = $crud->read(1);
-
+    print_r($crud->read(1));
 
     $user->first_name = 'Luigi';
     $user->last_name = 'Verdi';
