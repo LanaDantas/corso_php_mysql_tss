@@ -1,4 +1,5 @@
 <?php
+namespace validator;
 
 class ValidateName implements Validable {
 

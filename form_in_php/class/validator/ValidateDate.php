@@ -1,4 +1,6 @@
 <?php
+namespace validator;
+use DateTime;
 
 class ValidateDate implements Validable {
     

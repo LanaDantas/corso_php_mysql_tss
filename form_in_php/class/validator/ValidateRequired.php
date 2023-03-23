@@ -1,4 +1,6 @@
 <?php
+namespace validator;
+
 /**
  * - [x] Preservare il valore iniziale valido (e ripulito) del campo di testo
  * - visualizzare il messaggio di errore per il singolo campo

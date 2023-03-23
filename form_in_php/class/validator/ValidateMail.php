@@ -1,4 +1,5 @@
 <?php
+namespace validator;
 class ValidateMail {
 
     public function isValid (string $email) : bool {

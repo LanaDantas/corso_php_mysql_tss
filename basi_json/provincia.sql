@@ -1,4 +1,4 @@
--- Active: 1678187039915@@127.0.0.1@3306@form_in_php
+-- Active: 1677862054652@@127.0.0.1@3306@form_in_php
 CREATE TABLE provincia (
     id_provincia int NOT NULL AUTO_INCREMENT,
     nome VARCHAR(99) not NULL,

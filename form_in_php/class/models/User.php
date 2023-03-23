@@ -17,4 +17,14 @@ class User {
    {
       return $this->first_name." ".$this->last_name;
    }
+
+   public static function arrayToUser(array $class_array)
+   {
+      $user = new User;
+
+      foreach ($_POST as $class_attribute => $value_of_class_attribute) {
+          $user->$class_attribute = $value_of_class_attribute;
+      }
+      return $user;
+   }
 }
