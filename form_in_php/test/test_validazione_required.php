@@ -1,29 +1,31 @@
-<?php 
-// ValidateRequired campo obbligatorio, quindi non deve essere vuoto
+<?php
 
+use validator\ValidateRequired;
+
+require "./form_in_php/class/validator/Validable.php";
 require "./form_in_php/class/validator/ValidateRequired.php";
 
-
-$testCases = [
+//VALIDATE REQUIRED: campo obbligatorio
+$testCases = [ 
     [
-        'input' => '       ',
-        'expected' =>false 
+      'input' => '   ',
+      'expected' => false
     ],
     [
-        'input' => 'ciao ',
+        'input' => 'ciao    ',
         'expected' => 'ciao'
     ],
     [
-        'input' => '  ciao ',
-        'expected' => 'ciao' 
+        'input' => '     ciao    ',
+        'expected' => 'ciao'
     ],
     [
-        'input' => ' ciao',
-        'expected' => 'ciao' 
+        'input' => '    ciao',
+        'expected' => 'ciao'
     ],
     [
         'input' => '',
-        'expected' => false 
+        'expected' => false
     ],
     [
         'input' => '<h1>ciao</h1>',
@@ -34,23 +36,11 @@ $testCases = [
         'expected' => 'ciao'
     ],
     [
-        'input' => 'ciao</b>',
-        'expected' => 'ciao'
-    ],
-    [
-        'input' => '<b>ciao',
-        'expected' => 'ciao'
-    ],
-    [
-        'input' => '<b>   </b>',
+        'input' => '<b></b>',
         'expected' => false
     ],
     [
-        'input' => '<b></b>  ',
-        'expected' => false
-    ],
-    [
-        'input' => '<b>  ',
+        'input' => '<b>    </b>',
         'expected' => false
     ],
     [
@@ -60,7 +50,16 @@ $testCases = [
     [
         'input' => 0,
         'expected' => 0
+    ],
+    [
+        'input' => '<b>   ',
+        'expected' => false
+    ],
+    [
+        'input' => '      </b>',
+        'expected' => false
     ]
+    
 ];
 
 
@@ -69,13 +68,12 @@ foreach ($testCases as $key => $test){
     $expected = $test['expected'];
 
     $v = new ValidateRequired();
-    
-    if($v->isValid($input) != $expected){
-        echo "\nTest mumero $key non superato mi aspettavo";
+
+    if ($v->isValid($input) != $expected){
+        echo "\ntest numero $key NON superato, mi aspettavo: ";
         var_dump($expected);
-        echo "\nma ho trovato";
+        echo"\nma ho trovato";
         var_dump($v->isValid($input));
     };
+};
 
-    //print_r($test['input']);
-}

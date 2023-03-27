@@ -1,16 +1,27 @@
+
+<!-- <h1>Sono la risposta (RESPONSE)</h1> -->
 <?php
-/*
-& -> variabile
-"" / '' -> stringa
-parola singola -> costante es.(CICCIO)
-*/
 
-$test = filter_input(INPUT_GET,'email',FILTER_VALIDATE_EMAIL);
+/**echo"<pre>";
+echo "get:";
+print_r($_GET);
 
-if($test === false) {
-    echo "\nLa mail non è valida\n";
-} else {
+echo "post:";
+print_r($_POST);
+echo"</pre>";
+
+echo "La tua email è: <br>";
+echo "<strong>".$_POST['email']."</strong>";*/
+
+//Argomenti: costante + nome variabile da prendere + (filtro facoltativo)
+$test = filter_input(INPUT_GET,"email",FILTER_VALIDATE_EMAIL);
+
+if($test == false){
+    echo "\nla mail non è valida!\n";
+}else{
     echo "Grazie, la tua email è valida: $test";
 }
 
-//curl http://localhost/corso_php_mysql_tss/form_in_php/log-in-response.php?email=sbagliata
+
+?>
+

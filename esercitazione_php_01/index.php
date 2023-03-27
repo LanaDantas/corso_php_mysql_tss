@@ -4,40 +4,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esercitazione PHP</title>
+    <title>Document</title>
 </head>
 <body>
-
     <?php
-    //scrivere ina funzione array2ul che dato un array come argomento restituisce una stringa che return una stringa che rappresenta un elenco html
+    //scrivere una funzione "array2ul" che dato un array come argomento, restituisce una stringa 
+    //la stringa deve restituire una stringa che rappresenta un elenco html (ul)
+    $array2ul = array ("Rosso","Verde","Blu");
 
-    /** return una stringa che rappresenta un elenco html (ul)*/
-   /* String array2ul(Array $array) {
-    }
-    echo array2ul(array("rosso","verde"));*/
-  
-      $array2ul = array("Javascript","Java","HTML","PHP","SQL");
+    function  array2ul($array){
         
-         function array2ul($lezioni) {
-            $stampa = "<ul>";
-              for ($i=0; $i < count($lezioni); $i++) { 
-                $stampa .= "<li>$lezioni[$i]<li>";
-             }
-             $stampa .= "/<ul>";
-
-             return $stampa;
-         }
-
-        echo array2ul($array2ul);
-       
-           /* function array2ul($lezioni) {
-                foreach($lezioni as $stampa) {
-                    echo "<li>$stampa<li>"; 
-            }
+        $list = "<ul>";
+        
+        for ($i=0; $i < count($array) ; $i++) { 
+         $list .= "<li>$array[$i]</li>";
         }
+         $list .= "</ul>";
 
-        "<ul>".array2ul($lezioni)."</ul>";*/
+         return $list;
+
+    }
+ 
+    //un solo echo che stampa tutto
+    echo array2ul ($array2ul);
+
+      
     ?>
-    
 </body>
 </html>
