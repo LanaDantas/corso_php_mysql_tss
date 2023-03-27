@@ -1,4 +1,8 @@
 <?php
+
+//error_reporting(E_ALL); li vede tutti
+//error_reporting(0); li spegne tutti
+
 use crud\UserCRUD;
 use models\User;
 use Registry\it\Provincia;
@@ -9,61 +13,74 @@ use validator\ValidateRequired;
 use validator\ValidatorRunner;
 
 require "../config.php";
-require "autoload.php";
+require "./autoload.php";
+// require "./class/Registry/it/Regione.php";
+// require "./class/Registry/it/Provincia.php";
+// require "./class/validator/Validable.php";
+// require "./class/validator/ValidateRequired.php";
+// print_r($_POST);
 
-$validatorRunner = new ValidatorRunner([
-  'first_name' => new ValidateRequired('','Il Nome è obblicatorio'),
-  'last_name'  => new ValidateRequired('','Il Cognome è obblicatorio'),
-  'birthday'  => new ValidateDate('','La data di nascità non è valida'),
-  'gender'  => new ValidateRequired('','Il Genere è obbligatorio'),
-  'birth_city'  => new ValidateRequired('','La città  è obbligatoria'),
-  'id_regione'  => new ValidateRequired('','La regione è obbligatoria'),
-  'id_propvincia'  => new ValidateRequired('','La provincia è obbligatoria'),
+//TODO: Implementare criteri mutipli di valiidazione (array di validazioni non singole)
+//le variabili diventano indici dell'array
 
-  'username'  => new ValidateRequired('','Username è obbligaztorio'),
-  // 'username:email'  => new ValidateMail('','Formato email non valido'),
-  'password'  => new ValidateRequired('','Password è obbligatorio')
-]);
-extract($validatorRunner->getValidatorList());
+//una soluzione possibile per la validazione multipla è creare un array
+//'username' => [new ValidateRequired('', 'Username obbligatorio'), new ValidateMail('','')];
+
+     $validatorRunner = new ValidatorRunner([
+          'first_name' => new ValidateRequired('','Il Nome è obbligatorio'),
+          'last_name'  => new ValidateRequired('','Il Cognome è obbligatorio'),
+          'birthday'  => new ValidateDate('','La data di nascità non è valida'),
+          'birthday'  => new ValidateRequired('','La data di nascità è obbligatoria'),
+          'gender'  => new ValidateRequired('','Il Genere è obbligatorio'),
+          'birth_city'  => new ValidateRequired('','La città  è obbligatoria'),
+          'regione_id'  => new ValidateRequired('','La regione è obbligatoria'),
+          'provincia_id'  => new ValidateRequired('','La provincia è obbligatoria'),
+          'username'  => new ValidateRequired('','Username è obbligatorio'),
+          // 'username:email'  => new ValidateMail('','Formato email non valido'),
+          'password'  => new ValidateRequired('','Password è obbligatorio')
+
+      ]);
+      extract($validatorRunner->getValidatorList());
+      
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+     $validatorRunner->isValid();
   
-  $validatorRunner->isValid();
-  
-  if($validatorRunner->getValid()){
-    print_r($_POST);
+     if($validatorRunner->getValid()){
+       //i dati mi arrivano da un array, ma il crud lavora con oggetto 
+        // $user = (object) $_POST;
+        $user = User::arrayToUser($_POST);
 
-    $user = User::arrayToUser($_POST);
+         $crud = new UserCRUD();
+         //il create del crud vuole un oggetto di tipo user
+         $crud->create($user);
 
-    var_dump ($user->id_regione);
+         //redirect: posso stabilire un utilizzo
+         //header("location: http://www.google.com");
+         //posso inserire un percorso relativo alla pagina con lista utenti registrati
+         header("location:index-user.php");
+       
+     
+     }
 
-    $crud = new UserCRUD();
-    $crud->create($user);
-
-  }
 }
 
+/*if($validatorName->getValid() && $validatorLastName->getValid() && $validatorGender->getValid()){
+     //se tutti i campi sono validi invio i dati
+     //posso costruire un metodo per evitare questi passaggi vedi ValidatorRunner
+}
+/* questo script viene eseguito quanod visualizzo per la prima volta il form 
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+}*/
+
 ?>
+<!-- spostiamo header nel file che contiene la VIEW, per comodità creo un frammento che posso spostare -->
+<?php require "./class/views/head-view.php" ?> 
 
-
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Esercitazione Form</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-</head>
-
-<body>
-    <header class="bg-light p-1">
-        <h1 class="display-6">Applicazione demo</h1>
-    </header>
-    <main class="container">
-
-        <section class="row">
-            <div class="col-sm-8">
+   
+          <section class="row">
+          <div class="col-sm-8">
                 <form class="mt-1 mt-md-5" action="create-user.php" method="post">
                     <div class="mb-3">
                         <label for="first_name" class="form-label">nome</label>
@@ -80,9 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         <?php endif ?>
 
-
-                    </div>
-                    <div class="mb-3">
+                         </div>
+                         <div class="mb-3">
                         <label for="last_name" class="form-label">cognome</label>
                         <input type="text"
                                id="last_name"
@@ -111,41 +127,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endif ?>
                     </div>
 
-
-                <div class="mb-3">
+                    <div class="mb-3">
                     <div class="row">
                     <div class="col">
                         
                         <label for="birth_city" class="form-label">Città</label>
-                        <input type="text" class="form-control" name="birth_city" id="birth_city">
-
-
-                    </div>
-                    <div class="col">
+                        <input type="text" value="<?= $birth_city->getValue() ?>" class="form-control <?php echo !$birth_city->getValid() ? 'is-invalid':'' ?>" name="birth_city" id="birth_city">
                         
-                        <label for="id_regione" class="form-label">Regione</label>
-                        <select id="id_regione" class="form-select id_regione" name="id_regione">
-                                <option value=""></option>
-                                <?php foreach(Regione::all() as $regione) : ?> 
-                                    <option value="<?= $regione->id_regione ?>"><?= $regione->nome ?></option>
-                                <?php endforeach;  ?>
-                        </select>
-
-                        </div>
-                        <div class="col">
-                        <label for="id_provincia" class="form-label">Provincia</label>
-                        <select id="id_provincia" class="form-select id_provincia" name="id_provincia">
-                        <option value=""></option>
-                                <?php foreach(Provincia::all() as $provincia) : ?> 
-                                    <option value="<?= $provincia->id_provincia ?>"><?= $provincia->nome ?></option>
-                                <?php endforeach;  ?>
-                        </select>
-                            
+                        <?php if (!$birth_city->getValid()) : ?>
+                            <div class="invalid-feedback">
+                                <?php echo $birth_city->getMessage() ?>
+                            </div>
+                        <?php endif ?>
                     </div>
-                    </div>
-                </div>
+                              <div class="col"> 
+                                   <label for = "birth_region" class= "form-label">Regione</label>
+                                   <!-- select, voglio ottenere l'elenco regioni -->
+                                   <select id = "birth_region" value="<?= $regione_id->getValue() ?>"class="form-select birth_region <?php echo !$regione_id->getValid() ? 'is-invalid':'' ?>" name="regione_id">
+                                   <option value=""></option>
+                                   <?php foreach (Regione::all() as $regione) : ?>
+                                   <option value="<?= $regione->regione_id?>"><?=$regione->nome ?></option>
+                                   <?php endforeach; ?>
+                                   </select>     
+                                   <?php if (!$regione_id->getValid()) : ?>
+                            <div class="invalid-feedback">
+                                <?php echo $regione_id->getMessage() ?>
+                            </div>
+                        <?php endif ?>                 
+                              </div>
+                              
+                              <div class="col">
+                                   <label for = "birth_province" class= "form-label">Province</label>
+                                   <select id = "birth_province" value="<?= $provincia_id->getValue() ?>" class="form-select birth_province <?php echo !$provincia_id->getValid() ? 'is-invalid':'' ?>" name="provincia_id">
+                                   <option value=""></option>
+                                   <!-- select, voglio ottenere l'elenco province -->
+                                   <?php foreach (Provincia::all() as $provincia) : ?>
+                                   <option value="<?= $provincia->provincia_id?>"><?=$provincia->nome ?></option>
+                                   <?php endforeach; ?>
+                                   </select>   
+                                   <?php if (!$provincia_id->getValid()) : ?>
+                            <div class="invalid-feedback">
+                                <?php echo $provincia_id->getMessage() ?>
+                            </div>
+                        <?php endif ?>                 
+                              </div>
 
-                    <div class="mb-3">
+                         <div class="mb-3">
                         <!-- <h1><?php echo $gender->getValue() == 'M' ? 'AA':'BB' ?></h1> -->
                         <label for="gender" class="form-label">Genere</label>
                         <select name="gender" class="form-select <?php echo !$gender->getValid() ? 'is-invalid' :'' ?>" id="gender">
@@ -193,14 +220,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <button class="btn btn-primary btn-sm" type="submit">Registrati</button>
                 </form>
             </div>
-
-
-
-      
-        </section>
-    </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-</body>
-
-</html>
+          </section>
+          <?php require "./class/views/footer-view.php" ?>
+    

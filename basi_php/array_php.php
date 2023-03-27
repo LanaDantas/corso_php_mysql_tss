@@ -1,64 +1,61 @@
 <?php
-/*
+
 $nome = "Mario";
-echo "\tciao $nome \n";
-echo 'ciao $nome \n';
-*/
+echo "ciao $nome \n";
 
-# Index Array
-//$colori = array() uguale a:
-$colori = ["red","green","blu"];
+#INDEX(indicizzato) ARRAY
+//scorciatoia array $colori=array();
+$colori = ['red','green',"blue"];
+echo "\n\n".$colori[2];
 
-//echo "\n".$colori[2]."\n";
-
-# Associative Array (HashMap)
+#ASSOCIATIVE ARRAY (hanno come chiave delle stringhe)
 $persona = [
     "nome" => "Mario",
     "cognome" => "Rossi",
-    "email" => "mario.rossi@email.com"
-];
+    "email" => "a@b.it"
+    ];
 
-//print_r($persona);
-//var_dump($persona);
+//simile a console.log
+print_r($persona);
+//var_dump($persona); mi indica il numero di caratteri della stringa
 
+/**da errore Array to string conversion */
 //echo $persona['email'];
 
+//un array indicizzato che contiene 2 array associativi
 $classe = array(
     [
-        "email" => "mario.rossi@email.com",
         "nome" => "Mario",
-        "cognome" => "Rossi"
+        "cognome" => "Rossi",
+        "email" => "a@b.it" 
     ],
     [
-        "email" => "giovanni.verdi@email.com",
         "nome" => "Giovanni",
-        "cognome" => "Verdi"
+        "cognome" => "Verdi",
+        "email" => "v@d.it"
     ]
 );
+//0 = primo array, "nome" = accede a sstringa
+print_r($classe[0]["nome"]);
 
-//print_r($classe[0]["nome"]);
-
-# Imperativo
-echo "for Loop \n";
+#Stile di programmazione IMPERATIVO (dico al ciclo cosa fare)
 for ($i=0; $i < count($classe) ; $i++) { 
-
     $allievo = $classe[$i];
-    echo $allievo['nome']."\n";
+    $nomeAllievo = $allievo['nome']."\n";
+    echo $nomeAllievo;
 }
 
-echo "\nforeach Loop \n";
-echo "-----------------\n";
+#FOREACH
+//coppia chiave(nome)/(i) - valore(Giovanni)(allievo)
 foreach ($classe as $i => $allievo) {
-    echo ($i+1) . ") "  . $allievo['nome'];
-    echo "\n";
+    echo ($i+1) . ")" . $nomeAllievo;
 }
 
-# dichiarativo / funzionale
-echo "\nmap di un array\n";
-echo "-----------------\n";
-function stampaNome($allievo) {
-    echo $allievo['nome'];
-    echo "\n";
-}
+#DICHIARATIVO/FUNZIONALE: map di un array
+//Argomenti (funzione,array) ATTENZIONE: le funzioni sono variabili
+function stampaNome ($allievo){
+    echo $nomeAllievo;
+};
 
-array_map('stampaNome',$classe);
+array_map('stampaNome', $classe);
+

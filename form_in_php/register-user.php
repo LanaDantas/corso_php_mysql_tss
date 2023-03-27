@@ -1,28 +1,20 @@
 <?php
 
-$nome = filter_input(INPUT_POST,"first_name");
-$cognome = filter_input(INPUT_POST,"last_name");
-$birthday = filter_input(INPUT_POST,"birthday");
-$birthplace = filter_input(INPUT_POST,"birth_place");
-$gender = filter_input(INPUT_POST,"gender");
-$username = filter_input(INPUT_POST,"username");
-$password = filter_input(INPUT_POST,"password");
-//  print_r($_POST);
+// print_r($_POST);
 
-if(!$username) {
-    echo "<h2>Username non è valida</h2>";
-      } elseif (!$nome) {
-          echo "<h2>Compilare tutti i campi</h2>";
-        } elseif (!$cognome) {
-            echo "<h2>Compilare tutti i campi</h2>";
-        } elseif (!$birthday) {
-            echo "<h2>Compilare tutti i campi</h2>";
-        } elseif (!$birthplace) {
-            echo "<h2>Compilare tutti i campi</h2>";
-        } elseif (!$gender) {
-            echo "<h2>Compilare tutti i campi</h2>";
-        } elseif (!$password) {
-            echo "<h2>Inserire una password</h2>";
-     } else {
-        echo "<h2>Grazie $username, la tua username è valida</h2>";
-}
+// $test = filter_input(INPUT_POST,"username",FILTER_VALIDATE_EMAIL);
+
+// if($test == false){
+//     echo "\nLa mail non è valida!\n";
+// }else{
+//     echo "Grazie, la tua email è valida: $test";
+// }
+
+$first_name = filter_input(INPUT_POST, 'first_name');
+//se non metto filtri:
+//whitespace char restituisce una stringa | campo obbligatorio
+//non compilo stringa vuota "" | campo obbligatorio 
+//se compilato restituisce una stringa | OK
+//null se il form non passa il valore | errore o campo obbligatorio
+var_dump($first_name); 
+
