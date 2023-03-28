@@ -16,8 +16,6 @@ $user_id = filter_input(INPUT_GET,'user_id',FILTER_VALIDATE_INT);
 $crud = new UserCRUD();
 $user = $crud->read($user_id);
 
-// echo $user->birth_city;
-
 $validatorRunner = new ValidatorRunner([
     'first_name' => new ValidateRequired($user->first_name,'Il Nome è obblicatorio'),
     'last_name'  => new ValidateRequired($user->last_name,'Il Cognome è obblicatorio'),
@@ -26,9 +24,6 @@ $validatorRunner = new ValidatorRunner([
     'birth_city'  => new ValidateRequired($user->birth_city,'La città  è obbligatoria'),
     'regione_id'  => new ValidateRequired($user->regione_id,'La regione è obbligatoria'),
     'provincia_id'  => new ValidateRequired($user->provincia_id,'La provincia è obbligatoria')
-
-    // 'username'  => ($user->username),
-    // 'password'  => ($user->password)
 ]);
 extract($validatorRunner->getValidatorList());
 # --------------------------------------------------------------------------
@@ -38,13 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if($validatorRunner->getValid()){
         $user = User::arrayToUser($_POST);
         
-        // print_r($user);
         $crud = new UserCRUD();
         $user->user_id = filter_input(INPUT_GET,'user_id',FILTER_VALIDATE_INT);
         $crud->update($user);
-        // print_r($_POST);
         
-    //    header("location: index-user.php");
+        header("location: index-user.php");
     } else {
         echo "form non è valido";
     }
@@ -175,8 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="password" class="form-label">Password</label>
                         <input autocomplete="off" type="password" value="" id="password" name="password" class="form-control">
                     </div>
-
-                    <button class="btn btn-primary btn-sm" type="submit">Modifica</button>
+                        <button class="btn btn-primary btn-sm" type="submit">Modifica</button>
                 </form>
             </div>
         </section>
