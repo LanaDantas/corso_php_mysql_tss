@@ -1,8 +1,5 @@
 <?php
 
-//error_reporting(E_ALL); li vede tutti
-//error_reporting(0); li spegne tutti
-
 use crud\UserCRUD;
 use models\User;
 use Registry\it\Provincia;
@@ -14,74 +11,51 @@ use validator\ValidatorRunner;
 
 require "../config.php";
 require "./autoload.php";
-// require "./class/Registry/it/Regione.php";
-// require "./class/Registry/it/Provincia.php";
-// require "./class/validator/Validable.php";
-// require "./class/validator/ValidateRequired.php";
-// print_r($_POST);
 
-//TODO: Implementare criteri mutipli di valiidazione (array di validazioni non singole)
-//le variabili diventano indici dell'array
+$user_id = filter_input(INPUT_GET,'user_id',FILTER_VALIDATE_INT);
+$crud = new UserCRUD();
+$user = $crud->read($user_id);
 
-//una soluzione possibile per la validazione multipla è creare un array
-//'username' => [new ValidateRequired('', 'Username obbligatorio'), new ValidateMail('','')];
+// echo $user->birth_city;
 
-     $validatorRunner = new ValidatorRunner([
-          'first_name' => new ValidateRequired('','Il Nome è obbligatorio'),
-          'last_name'  => new ValidateRequired('','Il Cognome è obbligatorio'),
-          'birthday'  => new ValidateDate('','La data di nascità non è valida'),
-          'birthday'  => new ValidateRequired('','La data di nascità è obbligatoria'),
-          'gender'  => new ValidateRequired('','Il Genere è obbligatorio'),
-          'birth_city'  => new ValidateRequired('','La città  è obbligatoria'),
-          'regione_id'  => new ValidateRequired('','La regione è obbligatoria'),
-          'provincia_id'  => new ValidateRequired('','La provincia è obbligatoria'),
-          'username'  => new ValidateRequired('','Username è obbligatorio'),
-          // 'username:email'  => new ValidateMail('','Formato email non valido'),
-          'password'  => new ValidateRequired('','Password è obbligatorio')
+$validatorRunner = new ValidatorRunner([
+    'first_name' => new ValidateRequired($user->first_name,'Il Nome è obblicatorio'),
+    'last_name'  => new ValidateRequired($user->last_name,'Il Cognome è obblicatorio'),
+    'birthday'  => new ValidateDate($user->birthday,'La data di nascità non è valida'), // Controllare
+    'gender'  => new ValidateRequired($user->gender,'Il Genere è obbligatorio'),
+    'birth_city'  => new ValidateRequired($user->birth_city,'La città  è obbligatoria'),
+    'regione_id'  => new ValidateRequired($user->regione_id,'La regione è obbligatoria'),
+    'provincia_id'  => new ValidateRequired($user->provincia_id,'La provincia è obbligatoria')
 
-      ]);
-      extract($validatorRunner->getValidatorList());
-      
-
+    // 'username'  => ($user->username),
+    // 'password'  => ($user->password)
+]);
+extract($validatorRunner->getValidatorList());
+# --------------------------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $validatorRunner->isValid();
 
-     $validatorRunner->isValid();
-  
-     if($validatorRunner->getValid()){
-       //i dati mi arrivano da un array, ma il crud lavora con oggetto 
-        // $user = (object) $_POST;
+    if($validatorRunner->getValid()){
         $user = User::arrayToUser($_POST);
-
-         $crud = new UserCRUD();
-         //il create del crud vuole un oggetto di tipo user
-         $crud->create($user);
-
-         //redirect: posso stabilire un utilizzo
-         //header("location: http://www.google.com");
-         //posso inserire un percorso relativo alla pagina con lista utenti registrati
-         header("location:index-user.php");
-       
-     
-     }
-
+        
+        // print_r($user);
+        $crud = new UserCRUD();
+        $user->user_id = filter_input(INPUT_GET,'user_id',FILTER_VALIDATE_INT);
+        $crud->update($user);
+        // print_r($_POST);
+        
+    //    header("location: index-user.php");
+    } else {
+        echo "form non è valido";
+    }
 }
-
-/*if($validatorName->getValid() && $validatorLastName->getValid() && $validatorGender->getValid()){
-     //se tutti i campi sono validi invio i dati
-     //posso costruire un metodo per evitare questi passaggi vedi ValidatorRunner
-}
-/* questo script viene eseguito quanod visualizzo per la prima volta il form 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-}*/
-
 ?>
-<!-- spostiamo header nel file che contiene la VIEW, per comodità creo un frammento che posso spostare -->
-<?php require "./class/views/head-view.php" ?> 
 
-   
-          <section class="row">
-          <div class="col-sm-8">
-                <form class="mt-1 mt-md-5" action="create-user.php" method="post">
+<?php require  "./class/views/head-view.php" ?>
+
+        <section class="row">
+            <div class="col-sm-8">
+                <form class="mt-1 mt-md-5" action="edit-user.php?user_id=<?=$user->user_id ?>" method="post">
                     <div class="mb-3">
                         <label for="first_name" class="form-label">nome</label>
                         <input type="text" 
@@ -97,8 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                             </div>
                         <?php endif ?>
 
-                         </div>
-                         <div class="mb-3">
+
+                    </div>
+                    <div class="mb-3">
                         <label for="last_name" class="form-label">cognome</label>
                         <input type="text"
                                id="last_name"
@@ -113,8 +88,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                         <?php endif ?>
                     </div>
                     <div class="mb-3">
+                        <?= $birthday->getValue() ?>
                         <label for="birthday" class="form-label">Data Di Nascita</label>
                         <input type="date"
+                               
                                value="<?= $birthday->getValue() ?>"
                                class="form-control <?php echo !$birthday->getValid() ? 'is-invalid':'' ?>" 
                                name="birthday" 
@@ -127,18 +104,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                         <?php endif ?>
                     </div>
 
-                    <div class="mb-3">
+
+                <div class="mb-3">
                     <div class="row">
                     <div class="col">
-                        
-                        <label for="birth_city" class="form-label">Città</label>
+                        <label for="birth_city" class="form-label ">Città</label>
                         <input type="text" value="<?= $birth_city->getValue() ?>" class="form-control <?php echo !$birth_city->getValid() ? 'is-invalid':'' ?>" name="birth_city" id="birth_city">
-                        
                         <?php if (!$birth_city->getValid()) : ?>
                             <div class="invalid-feedback">
                                 <?php echo $birth_city->getMessage() ?>
                             </div>
                         <?php endif ?>
+
                     </div>
                     <div class="col">
                         
@@ -172,8 +149,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     </div>
                 </div>
 
-                         <div class="mb-3">
-                        <!-- <h1><?php echo $gender->getValue() == 'M' ? 'AA':'BB' ?></h1> -->
+                    <div class="mb-3">
+                     
                         <label for="gender" class="form-label">Genere</label>
                         <select name="gender" class="form-select <?php echo !$gender->getValid() ? 'is-invalid' :'' ?>" id="gender">
                             <option value=""></option>
@@ -190,36 +167,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     </div>
                     <div class="mb-3">
                         <label for="username" class="form-label">Nome Utente / EMAIL</label>
-                        <input type="text"  value="<?php echo $username->getValue() ?>" class="form-control 
-                            <?php echo (!$username->getValid() && !$username->getValid()) ? 'is-invalid':'' ?>" name="username" id="username">
-                        <?php
-                        //if (!$username_email->getValid()) : ?>
+                        <input type="text" autocomplete="no"  value="" class="form-control" name="username" id="username">
                             <div class="invalid-feedback">
-                            <?php //echo $username_email->getMessage() ?>
                             </div>
-                        <?php // endif ?>
-
-                        <?php
-                        if (!$username->getValid()) : ?>
-                            <div class="invalid-feedback">
-                            <?php echo $username->getMessage() ?>
-                            </div>
-                        <?php endif ?>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" value="<?= $password->getValue()  ?>" id="password" name="password" class="form-control <?php echo !$password->getValid() ? 'is-invalid' : ''  ?>">
-                        <?php
-                        if (!$password->getValid()) : ?>
-                            <div class="invalid-feedback">
-                               <?php echo $password->getMessage() ?>
-                            </div>
-                        <?php endif ?>
+                        <input autocomplete="off" type="password" value="" id="password" name="password" class="form-control">
                     </div>
 
-                    <button class="btn btn-primary btn-sm" type="submit">Registrati</button>
+                    <button class="btn btn-primary btn-sm" type="submit">Modifica</button>
                 </form>
             </div>
-          </section>
-          <?php require "./class/views/footer-view.php" ?>
-    
+        </section>
+   
+        <?php require "./class/views/footer-view.php" ?>

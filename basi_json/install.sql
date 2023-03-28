@@ -1,9 +1,9 @@
--- Active: 1677862045305@@127.0.0.1@3306@form_in_php
+-- Active: 1677862054652@@127.0.0.1@3306@form_in_php
 
 CREATE Table regione (
-    id_regione int NOT NULL AUTO_INCREMENT,
+    regione_id int NOT NULL AUTO_INCREMENT,
     nome VARCHAR(99) not NULL,
-    PRIMARY KEY (id_regione)
+    PRIMARY KEY (regione_id)
 
 );
 
@@ -19,18 +19,18 @@ INSERT INTO regione(nome)VALUES ('Valle d\'Aosta/Vallée d\'Aoste');
 TRUNCATE TABLE regione;
 
 CREATE Table provincia (
-    id_provincia int NOT NULL AUTO_INCREMENT,
-    id_regione int NOT NULL,
+    provincia_id int NOT NULL AUTO_INCREMENT,
+    regione_id int NOT NULL,
     nome VARCHAR(255) not NULL,
     sigla CHAR(2) not NULL,
-    PRIMARY KEY (id_provincia)
+    PRIMARY KEY (provincia_id)
     /*FOREIGN KEY (id_regione) REFERENCES regione (id_regione)*/
     );
 
 
-SELECT id_regione FROM regione WHERE nome = 'Sicilia'; 
+SELECT regione_id FROM regione WHERE nome = 'Sicilia'; 
 
-INSERT INTO provincia (nome,sigla,id_regione) VALUES ('Agrigento', 'AG', 15);
+INSERT INTO provincia (nome,sigla,regione_id) VALUES ('Agrigento', 'AG', 15);
 
 SELECT * FROM provincia;
 
