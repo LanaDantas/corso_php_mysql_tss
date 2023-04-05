@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@500&display=swap');
+
+.avatar {
+    border: 1px solid #fadd05;
+    display: flex;
+    align-items: center;
+    border-radius: 32px 32px;
+    margin-bottom: 1rem;
+    background-color: rgba(78, 234, 255, 0.099);
+}
+
+.avatar__user {
+    font-family: 'Inknut Antiqua', serif;
+    color: #fadd05;
+}
+
+.avatar__img {
+    border-radius: 50%;
+    width: 64px;
+    margin-right: 1rem;
+}
+
+.avatar--s > .avatar__img {
+    width: 32px;
+    margin-right: 0.5rem;
+}
+
+.avatar--m > .avatar__img {
+    width: 42px;
+    margin-right: 0.5rem;
+}
+
+.avatar--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

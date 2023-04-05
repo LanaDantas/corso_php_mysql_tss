@@ -29,7 +29,7 @@ require "./autoload.php";
      $validatorRunner = new ValidatorRunner([
           'first_name' => new ValidateRequired('','Il Nome è obbligatorio'),
           'last_name'  => new ValidateRequired('','Il Cognome è obbligatorio'),
-          'birthday'  => new ValidateDate('','La data di nascità non è valida'),
+          'birthday'  => new ValidateRequired('','La data di nascità non è valida'),
           'birthday'  => new ValidateRequired('','La data di nascità è obbligatoria'),
           'gender'  => new ValidateRequired('','Il Genere è obbligatorio'),
           'birth_city'  => new ValidateRequired('','La città  è obbligatoria'),

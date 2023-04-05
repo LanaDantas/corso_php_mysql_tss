@@ -19,10 +19,31 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `form_in_php`
+-- Database: `todo_list`
 --
 
 -- --------------------------------------------------------
+
+--
+-- Struttura della tabella `task`
+--
+
+DROP TABLE IF EXISTS `task`;
+CREATE TABLE `task` (
+  `task_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `due_date` DATE NOT NULL,
+  `done` BOOLEAN NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `task`
+--
+
+INSERT INTO `task` (`task_id`, `user_id`, `name`, `due_date`, `done`)
+VALUES (1, 1, 'Comprare latte', '2023-04-24', false);
+
 
 --
 -- Struttura della tabella `provincia`
@@ -208,8 +229,19 @@ CREATE TABLE `user` (
   `gender` enum('M','F') NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `users`
+--
+
+INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `birthday`, `birth_city`, `regione_id`, `provincia_id`, `gender`, `username`, `password`) VALUES
+(1, 'Mario', 'Rossi', '2020-04-17', 'Torino', 15, 15, 'M', '@b.itdfdfsg', 'segretissimo'),
+(2, 'Luigi', 'Verdi', '2017-03-17', 'Torino', 16, 15, 'M', 'giuseppe@xcvxc', 'a3ea3259dd51c5d28ac011a8dbf78e79'),
+(3, 'Peach', 'Rosa', '2013-03-17', 'Roma', 20, 18, 'F', 'xzczxcxzczxcz', 'a3ea3259dd51c5d28ac011a8dbf78e79'),
+(4, 'Yoshi', 'Bros', '2000-03-12', 'Torino', 18, 17, 'M', 'wadaswdfasdf asfa', 'a3ea3259dd51c5d28ac011a8dbf78e79'),
+(5, 'Elena', 'Rossi', '1999-03-01', 'Roma', 18, 17, 'F', 'a@b.it', 'a3ea3259dd51c5d28ac011a8dbf78e79'),
+(6, 'Aldo', 'Verdi', '1984-01-11', 'Milano', 2, 1, 'M', 'b@b.it', 'a3ea3259dd51c5d28ac011a8dbf78e79');
 --
 -- Indici per le tabelle scaricate
 --
@@ -227,17 +259,14 @@ ALTER TABLE `user`
   ADD UNIQUE (username);
   -- ADD UNIQUE (first_name, last_name) si applica in contemporanea a più elementi
 
-
+ALTER TABLE `task`
+  ADD PRIMARY KEY (`task_id`);
 
 --
 -- Indici per le tabelle `regione`
 --
 ALTER TABLE `regione`
   ADD PRIMARY KEY (`regione_id`);
-
---
--- AUTO_INCREMENT per le tabelle scaricate
---
 
 --
 -- AUTO_INCREMENT per la tabella `provincia`
@@ -247,11 +276,20 @@ ALTER TABLE `provincia`
 
 ALTER TABLE `user`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `task`
+  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT per la tabella `regione`
 --
 ALTER TABLE `regione`
   MODIFY `regione_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--foreign key per le task
+--
+
+ALTER TABLE `task`
+ ADD FOREIGN KEY (user_id) REFERENCES user(user_id);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

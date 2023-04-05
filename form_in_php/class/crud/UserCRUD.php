@@ -27,7 +27,8 @@ class UserCRUD
         $stm->bindValue(':username', $user->username, PDO::PARAM_STR);
         $stm->bindValue(':password', md5($user->password), PDO::PARAM_STR);
         $stm->execute();
-        
+        return $conn->lastInsertId();
+
     }
 
     public function update($user)
@@ -50,11 +51,12 @@ class UserCRUD
         $stm->bindValue(':user_id', $user->user_id, PDO::PARAM_INT);
         $stm->execute();
        
+        return $stm->rowCount();
+
     }
 
     //leggo le informazioni su tutti gli utenti
-    public function read(int $user_id = null):User|array|bool
-    {
+    public function read(int $user_id = null) {
         $conn = new PDO(DB_DSN, DB_USER, DB_PASSWORD);
         if (!is_null($user_id)) {
             //variante del read passando user_id

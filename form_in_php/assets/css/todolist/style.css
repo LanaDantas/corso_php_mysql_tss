@@ -1,0 +1,227 @@
+/* All */
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@500&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Helvetica;
+    color: rgb(8, 8, 8);
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(254, 254, 254);
+    background-size: cover;
+}
+
+button {
+    background-color: #fbfbfb;
+    border: 2px solid #fadd05;
+    padding: .3rem .6rem;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+}
+
+button:hover {
+    background-color: #fadd05;
+}
+
+button i {
+    color: black;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+input, select {
+    padding: .25rem .5rem;
+}
+
+.hide {
+    display: none;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    color: #fadd05;
+}
+
+.h1-title {
+    font-family: 'Inknut Antiqua', serif;
+}
+
+/* TODO header */
+.todo-container {
+max-width: 650px;
+margin: 3rem auto 0;
+background-color: black;
+padding: 1.5rem;
+border-radius: 15px;
+}
+
+.todo-container header {
+    text-align: center;
+    padding: 0 1rem 1rem;
+}
+
+/* TODO form */
+#todo-form {
+    display: flex;
+    justify-content: space-between;
+}
+
+#todo-form, #edit-form {
+    padding: 1rem;
+    border: 1px solid #fadd05;
+    border-radius: 1rem;
+}
+
+#todo-form p,
+#edit-form p {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-control {
+    display: flex;
+}
+
+.form-control input {
+    margin-right: 0.3rem;
+}
+
+#cancel-edit-btn {
+    margin-top: 1rem;
+}
+
+/* TODO toolbar */
+
+#toolbar {
+    padding: 1rem;
+    border: 1px solid #fadd05;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 1rem;
+    display: flex;
+}
+
+#toolbar h4 {
+    margin-bottom: .5rem;
+}
+
+#search {
+    padding-right: 2rem;
+    margin-right: 1rem;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+#search form {
+    display: flex;
+}
+
+#search input {
+    width: 100%;
+    margin-right: 1rem;
+}
+
+#filter {
+    border-right: 1px solid #fadd05;
+    padding-right: 1rem;
+    margin-right: 1rem;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+}
+
+#filter select {
+    flex: 1;
+}
+
+#date-filter {
+    padding-right: 1rem;
+    margin-right: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction:column;
+}
+
+/* TODO list */
+.todo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #fadd05;
+    border-radius: 1rem;
+    transition: .3s;
+}
+
+.todo h3 {
+    flex: 1;
+    font-size: 0.9rem;
+}
+
+.todo button {
+    margin-left: 0.4rem;
+}
+
+.done {
+    background-color: #fadd05;
+}
+
+.done h3 {
+    color: black;
+    text-decoration: line-through;
+    font-style: italic;
+}
+
+.todo-employee {
+    margin-bottom: 0.5rem;
+    margin-left: 1rem;
+    margin-top: 2rem;
+    margin-right: 75%;
+    padding: 0.7rem;
+    border: 1px solid #fadd05;
+    border-radius: 1rem;
+    flex: 1;
+}
+
+
+@media screen and (max-width: 1330px) {
+    .form-image {
+        display: none;
+    }
+    .todo-container {
+        width: 50%;
+    }
+    .todo-form {
+        width: 100%;
+    }
+
+    @media screen and (max-width: 1064px) {
+        .todo-container {
+            width: 90%;
+            height: auto;
+        }
+        #toolbar, .todo, #todo-form {
+            flex-direction: column;
+            z-index: 5;
+            padding-right: 5rem;
+            max-height: 10rem;
+            overflow-y: scroll;
+            flex-wrap: nowrap;
+        }
+        .todo {
+            flex-direction: column;
+            z-index: 5;
+            padding-right: 5rem;
+            max-height: 10rem;
+            overflow-y: scroll;
+            flex-wrap: nowrap;
+        }
+    }
+}
