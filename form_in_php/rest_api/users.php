@@ -69,53 +69,47 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         echo json_encode($response);
 
+
         break;
     
     case 'PUT' :
 
-        $user_id = filter_input(INPUT_GET, 'user_id');
         $input = file_get_contents('php://input');
         $request = json_decode($input,true); 
         $user = User::arrayToUser($request);
+        $user_id = filter_input(INPUT_GET, 'user_id');
         
         if(!is_null($user_id)) {
             $rows = $crud->update($user, $user_id);
 
-            if($rows == 1) {
+            if($rows != 0) {
+                http_response_code(202);
+
                 $user = (array) $user;
                 unset($user['password']);
-
+                unset($user['username']);
                 $user['user_id'] = $user_id;
-
                 $response = [
                     'data' => $user,
-                    'status' => 200,
-                    'details' => "User with ID ".$user_id." updated successfully"
+                    'status' => 202
                 ];
             } 
-            if($rows==0) {
-                $user = $crud->read($user_id);
-                if(!$user) {
-                    $response = [
-                        'errore' => [
-                            [
-                                'status' => 404,
-                                'title' => "User not fount",
-                                'details' => "ID user ".$user_id
-                            ]
+            if($rows === 0) {
+                http_response_code(404);
+                    
+                $response = [
+                    'errore' => [
+                        [
+                            'status' => 404,
+                            'title' => "Utente non trovato",
+                            'details' => $user_id
                         ]
-                    ];
-                } else {
-                    $response = "User ID ".$user_id." alredy updated";
-                }
+                    ]
+                ];
+                echo json_encode($response);
             } 
-            echo json_encode($response);
 
-            } else {
-                $users = $crud->read();
-                echo json_encode($users);
             }
-
             
         break;
 
