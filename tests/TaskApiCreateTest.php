@@ -2,26 +2,23 @@
 
 use PHPUnit\Framework\TestCase;
 
+// require_once( ".tests/HTTPClient.php");
 require_once "config.php";
+require_once "form_in_php/test/test_autoload.php";
 
-class UserApiCreateTest extends TestCase {
+class TaskApiCreateTest extends TestCase {
 
-    public function test_create_user_api() {
-    (new PDO(DB_DSN,DB_USER,DB_PASSWORD))->query("TRUNCATE TABLE user;");
+    public function test_create_task_api() {
+        (new PDO(DB_DSN,DB_USER,DB_PASSWORD))->query("TRUNCATE TABLE task;");
 
         $payload = [
-            "first_name" => "Giuse",
-            "last_name" => "Bianchi",
-            "birthday" => "2017-03-17",
-            "birth_city" => "Como",
-            "regione_id" => 16,
-            "provincia_id" => 15,
-            "gender" => "M",
-            "username" => "b@c",
-            "password" => "Password",
+            "user_id" => 1,
+            "name" => "Comprare latte",
+            "due_date" => "2023-04-24",
+            "done" => false
         ];
 
-        $response = $this->post("http://localhost/corso_php_mysql_tss-master/form_in_php/rest_api/users.php", $payload);
+        $response = $this->post("http://localhost/corso_php_mysql_tss-master/form_in_php/rest_api/tasks.php", $payload);
         fwrite(STDERR, print_r($response, TRUE));
 
         // $this->assertNull($response);

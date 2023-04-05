@@ -13,7 +13,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
 
         $user_id = filter_input(INPUT_GET, 'user_id', FILTER_VALIDATE_INT);
-        if(!is_null($user_id)) {
+        if (!is_null($user_id)) {
             echo json_encode($crud->read($user_id));
         } else {
             $tasks = $crud->read();
@@ -45,7 +45,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 ];
             }
 
-            echo json_encode($response);
+            echo json_encode($response,JSON_PRETTY_PRINT);
         }
 
         break;
@@ -54,15 +54,30 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $input = file_get_contents('php://input');
         $request = json_decode($input, true);
         $task = Task::arrayTask($request);
-        $last_id = $crud->create($task);
 
-        $task = (array) $task;
-        $task['task_id'] = $last_id;
-        $response = [
-            'data' => $task,
-            'status' => 201
-        ];
-        echo json_encode($response);
+        try {
+            $last_id = $crud->create($task);
+
+            $task = (array) $task;
+            $task['task_id'] = $last_id;
+            $response = [
+                'data' => $task,
+                'status' => 201
+            ];
+            echo json_encode($response,JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            http_response_code(422);
+
+            $response = [
+                'errors' => [
+                    [
+                        'status' => 422,
+                        'title' => "formato errato",
+                        'details' => $th->getMessage()
+                    ]
+                ]
+            ];
+        }
         break;
 
     case 'PUT':
@@ -97,8 +112,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     ]
                 ];
             }
-            echo json_encode($response); 
-            
+            echo json_encode($response,JSON_PRETTY_PRINT);
         } else {
             $tasks = $crud->read();
             echo json_encode($tasks);
@@ -109,5 +123,4 @@ switch ($_SERVER['REQUEST_METHOD']) {
     default:
         # code...
         break;
-
 }

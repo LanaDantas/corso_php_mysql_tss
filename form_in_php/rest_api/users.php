@@ -47,7 +47,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 ];
             }
 
-            echo json_encode($response);
+            echo json_encode($response,JSON_PRETTY_PRINT);
         }
 
         break;
@@ -73,6 +73,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             ];
 
             echo json_encode($response,JSON_PRETTY_PRINT);
+            
         } catch (\Throwable $th) {
             http_response_code(422);
 
@@ -124,7 +125,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                         ]
                     ]
                 ];
-                echo json_encode($response);
+                echo json_encode($response,JSON_PRETTY_PRINT);
             }
         }
 
