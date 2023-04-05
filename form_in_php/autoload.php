@@ -1,12 +1,9 @@
 <?php
 
-
-
-// AUTOLOAD HTML FRONTEND (per interfaccia grafica)
-spl_autoload_register(function($className){
-    // C:\xampp\htdocs\corso_php_mysql_2223\form_in_php\class
+spl_autoload_register(function($className) {
     
-    $className = str_replace("\\","/",__DIR__."/class/".$className.'.php');
-    require $className;
-;
+    $classPath =  str_replace("\\", "/", __DIR__."/class//".$className);
+    require $classPath.".php";
 });
+
+?>

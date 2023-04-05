@@ -53,7 +53,7 @@ class TaskCRUD
             //ATTENZIONE devo specificare fetch_class perchè altrimenti mi ripete
             //due volte le informazioni (di default è fetch both)
             $stm->execute();
-            $result = $stm->fetchAll(PDO::FETCH_CLASS, User::class);
+            $result = $stm->fetchAll(PDO::FETCH_CLASS, Task::class);
 
             if (count($result) == 1) {
                 return $result[0];

@@ -11,14 +11,15 @@ $crud = new TaskCRUD;
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        $user_id = filter_input(INPUT_GET, 'id_user', FILTER_VALIDATE_INT);
+
+        $user_id = filter_input(INPUT_GET, 'user_id', FILTER_VALIDATE_INT);
         if(!is_null($user_id)) {
             echo json_encode($crud->read($user_id));
         } else {
             $tasks = $crud->read();
             echo json_encode($tasks);
         }
-        
+
         break;
 
     case 'DELETE':
