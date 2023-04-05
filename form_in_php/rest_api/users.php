@@ -1,6 +1,8 @@
 <?php
+
 use crud\UserCRUD;
 use models\User;
+
 include "../../config.php";
 include "../autoload.php";
 
@@ -11,7 +13,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
 
         $user_id = filter_input(INPUT_GET, 'user_id');
-        if(!is_null($user_id)) {
+        if (!is_null($user_id)) {
             echo json_encode($crud->read($user_id));
         } else {
             $users = $crud->read();
@@ -21,17 +23,17 @@ switch ($_SERVER['REQUEST_METHOD']) {
         # Model
         break;
 
-    case 'DELETE' :
+    case 'DELETE':
 
-        $user_id = filter_input(INPUT_GET,'user_id');
-        if(!is_null($user_id)){
+        $user_id = filter_input(INPUT_GET, 'user_id');
+        if (!is_null($user_id)) {
             $rows = $crud->delete($user_id);
-            if($rows == 1){
+            if ($rows == 1) {
                 http_response_code(204);
             }
 
-            if($rows == 0 ){
-            
+            if ($rows == 0) {
+
                 http_response_code(404);
 
                 $response = [
@@ -40,49 +42,65 @@ switch ($_SERVER['REQUEST_METHOD']) {
                             'status' => 404,
                             'title' => "Utente non trovato",
                             'details' => $user_id
-                         ]
-                    ]    
+                        ]
+                    ]
                 ];
             }
-    
+
             echo json_encode($response);
         }
 
         break;
 
-    case 'POST' :
+    case 'POST':
 
         $input = file_get_contents('php://input');
-        $request = json_decode($input,true); // ottengo un array associativo
+        $request = json_decode($input, true); // ottengo un array associativo
 
         $user = User::arrayToUser($request);
-        $last_id = $crud->create($user);
 
-        $user = (array) $user;
-        unset($user['password']);
-        $user['user_id'] = $last_id;
+        try {
 
-        $response = [
-            'data' => $user,
-            'status' => 202
-        ];
+            $last_id = $crud->create($user);
 
-        echo json_encode($response);
+            $user = (array) $user;
+            unset($user['password']);
+            $user['user_id'] = $last_id;
 
+            $response = [
+                'data' => $user,
+                'status' => 202
+            ];
+
+            echo json_encode($response,JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            http_response_code(422);
+
+            $response = [
+                'errors' => [
+                    [
+                        'status' => 422,
+                        'title' => "formato errato",
+                        'details' => $th->getMessage()
+                    ]
+                ]
+            ];
+        }
+        echo json_encode($response,JSON_PRETTY_PRINT);
 
         break;
-    
-    case 'PUT' :
+
+    case 'PUT':
 
         $input = file_get_contents('php://input');
-        $request = json_decode($input,true); 
+        $request = json_decode($input, true);
         $user = User::arrayToUser($request);
         $user_id = filter_input(INPUT_GET, 'user_id');
-        
-        if(!is_null($user_id)) {
+
+        if (!is_null($user_id)) {
             $rows = $crud->update($user, $user_id);
 
-            if($rows != 0) {
+            if ($rows != 0) {
                 http_response_code(202);
 
                 $user = (array) $user;
@@ -93,10 +111,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     'data' => $user,
                     'status' => 202
                 ];
-            } 
-            if($rows === 0) {
+            }
+            if ($rows === 0) {
                 http_response_code(404);
-                    
+
                 $response = [
                     'errore' => [
                         [
@@ -107,10 +125,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     ]
                 ];
                 echo json_encode($response);
-            } 
-
             }
-            
+        }
+
         break;
 
     default:
