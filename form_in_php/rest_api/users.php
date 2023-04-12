@@ -130,8 +130,44 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
 
         break;
-
-    default:
-        # code...
+        default:
         break;
+}
+
+function responseError($e)
+{
+ 
+    if($e->getCode() == 404){
+
+        http_response_code(404);
+
+        $response = [
+            'errors' => [
+                [
+                    'status' => 404,
+                    'title' => "risorsa non trovata",
+                    'details' => filter_input(INPUT_GET,'user_id')
+                 ]
+            ]    
+        ];
+        return $response;
+    }
+
+    if($e->getCode() == 23000){
+
+        http_response_code(422);
+
+        $response = [
+            'errors' => [
+                [
+                    'status' => 422,
+                    'title' => "formato non corretto",
+                    'details' => $e->getMessage()
+                 ]
+            ]    
+        ];
+        return $response;
+    }
+
+
 }
