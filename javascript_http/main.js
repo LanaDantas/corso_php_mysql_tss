@@ -5,7 +5,7 @@ import { UsersList, UserTable } from "./RenderView.js";
 getUser()
 .then(json => {
 
-    UsersList(json,'lista_utenti_1')
+    UsersList(json.data,'lista_utenti_1')
 })
 
 const user_locale = [

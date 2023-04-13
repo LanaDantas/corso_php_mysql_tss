@@ -7,5 +7,4 @@ export function getUser() {
       // promessa json
     return fetch(base_url+"/users.php").then((response) => response.json()) 
 
-
 }

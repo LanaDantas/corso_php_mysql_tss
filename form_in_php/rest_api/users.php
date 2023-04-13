@@ -14,13 +14,30 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         $user_id = filter_input(INPUT_GET, 'user_id');
         if (!is_null($user_id)) {
-            echo json_encode($crud->read($user_id));
-        } else {
+            $res = $crud->read($user_id);
+            if($res == false){
+                $response = [
+                    'errors' => [
+                        [
+                            'status' => 404,
+                            'title' => "risorsa non trovata",
+                            'details' => filter_input(INPUT_GET,'user_id')
+                         ]
+                    ]    
+                ];  
+                echo json_encode($response);
+            } else {
+                echo json_encode($res);
+            }
+        }else{
             $users = $crud->read();
-            echo json_encode($users);
+            $response = [
+                'data' => $users,
+                'status' => 200
+            ]; 
+            echo json_encode($response);
         }
-        // ottenere l'elenco degli utenti
-        # Model
+
         break;
 
     case 'DELETE':
@@ -29,10 +46,15 @@ switch ($_SERVER['REQUEST_METHOD']) {
         if (!is_null($user_id)) {
             $rows = $crud->delete($user_id);
             if ($rows == 1) {
-                http_response_code(204);
-            }
+                http_response_code(200);
 
-            if ($rows == 0) {
+                $response = 
+                        [
+                            'data' => $user_id,
+                            'status' => 200,
+                            'details' => "User con ID " + $user_id+" è stato eliminato"
+                        ];
+            } if ($rows == 0) {
 
                 http_response_code(404);
 
@@ -70,10 +92,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $response = [
                 'data' => $user,
                 'status' => 202
-            ];
-
-            echo json_encode($response,JSON_PRETTY_PRINT);
-            
+            ];            
         } catch (\Throwable $th) {
             http_response_code(422);
 
@@ -99,7 +118,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $user_id = filter_input(INPUT_GET, 'user_id');
 
         if (!is_null($user_id)) {
-            $rows = $crud->update($user, $user_id);
+            $rows = $crud->update($user);
 
             if ($rows != 0) {
                 http_response_code(202);
@@ -110,8 +129,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 $user['user_id'] = $user_id;
                 $response = [
                     'data' => $user,
-                    'status' => 202
+                    'status' => 202,
                 ];
+                echo json_encode($response,JSON_PRETTY_PRINT);
             }
             if ($rows === 0) {
                 http_response_code(404);

@@ -6,18 +6,37 @@ use models\Task;
 include "../../config.php";
 include "../autoload.php";
 
-
 $crud = new TaskCRUD;
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
 
-        $user_id = filter_input(INPUT_GET, 'user_id', FILTER_VALIDATE_INT);
+        $task_id = filter_input(INPUT_GET, 'task_id');
+        $user_id = filter_input(INPUT_GET, 'user_id');
+
         if (!is_null($user_id)) {
-            echo json_encode($crud->read($user_id));
-        } else {
+            $res = $crud->read($user_id);
+            if($res == false){
+                $response = [
+                    'errors' => [
+                        [
+                            'status' => 404,
+                            'title' => "risorsa non trovata",
+                            'details' => filter_input(INPUT_GET,'user_id')
+                         ]
+                    ]    
+                ];  
+                echo json_encode($response);
+            } else {
+                echo json_encode($res);
+            }
+        }else{
             $tasks = $crud->read();
-            echo json_encode($tasks);
+            $response = [
+                'data' => $tasks,
+                'status' => 200
+            ]; 
+            echo json_encode($response);
         }
 
         break;
@@ -27,9 +46,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
         if (!is_null($task_id)) {
             $rows = $crud->delete($task_id);
             if ($rows == 1) {
-                http_response_code(204);
-            }
+                http_response_code(200);
 
+                $response =
+                    [
+                        'data' => $task_id,
+                        'status' => 200,
+                    ];
+            }
             if ($rows == 0) {
 
                 http_response_code(404);
@@ -45,7 +69,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 ];
             }
 
-            echo json_encode($response,JSON_PRETTY_PRINT);
+            echo json_encode($response, JSON_PRETTY_PRINT);
         }
 
         break;
@@ -64,7 +88,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 'data' => $task,
                 'status' => 201
             ];
-            echo json_encode($response,JSON_PRETTY_PRINT);
+            echo json_encode($response, JSON_PRETTY_PRINT);
         } catch (\Throwable $th) {
             http_response_code(422);
 
@@ -112,7 +136,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     ]
                 ];
             }
-            echo json_encode($response,JSON_PRETTY_PRINT);
+            echo json_encode($response, JSON_PRETTY_PRINT);
         } else {
             $tasks = $crud->read();
             echo json_encode($tasks);

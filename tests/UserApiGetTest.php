@@ -7,7 +7,7 @@ require_once "form_in_php/test/test_autoload.php";
 
 class UserApiCreateTest extends TestCase {
 
-    public function test_create_user_api() {
+    public function test_get_user_api() {
     (new PDO(DB_DSN,DB_USER,DB_PASSWORD))->query("TRUNCATE TABLE user;");
 
         $payload = [
@@ -42,7 +42,7 @@ class UserApiCreateTest extends TestCase {
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_POSTFIELDS => json_encode($body),
             CURLOPT_HTTPHEADER => [
                 "Accept: */*",
@@ -63,5 +63,3 @@ class UserApiCreateTest extends TestCase {
         }
     }
 }
-
-// nodemon -x ./vendor/bin/phpunit tests

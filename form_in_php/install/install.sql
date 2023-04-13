@@ -288,8 +288,8 @@ ALTER TABLE `regione`
 --foreign key per le task
 --
 
-ALTER TABLE `task`
- ADD FOREIGN KEY (user_id) REFERENCES user(user_id);
+-- ALTER TABLE `task`
+--  ADD FOREIGN KEY (user_id) REFERENCES user(user_id);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
