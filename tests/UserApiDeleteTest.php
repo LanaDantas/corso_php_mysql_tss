@@ -1,0 +1,52 @@
+<?php
+
+use PHPUnit\Framework\TestCase;
+
+require_once "form_in_php/config.php";
+require_once "./tests/HTTPClient.php";
+require_once "./tests/replace_users.php";
+
+class UserApiDeleteTest extends TestCase {
+
+    public function test_delete_user_api() {
+    (new PDO(DB_DSN,DB_USER,DB_PASSWORD))->query("TRUNCATE TABLE user;");
+    replace_users();
+
+        $response = $this->delete("http://localhost/corso_php_mysql_tss-master/form_in_php/rest_api/users.php?user_id=1");
+        fwrite(STDERR, print_r($response, TRUE));
+
+        $this->assertJson($response);
+    }
+
+    function delete(string $url)
+{
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, [
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "DELETE",
+        CURLOPT_HTTPHEADER => [
+            "Accept: */*",
+            "Content-Type: application/json",
+            "User-Agent: Thunder Client (https://www.thunderclient.com)"
+        ],
+    ]);
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+        echo "cURL Error #:" . $err;
+    } else {
+        return $response;
+    }
+}
+}

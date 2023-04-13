@@ -1,5 +1,5 @@
 <?php
-include "./config.php";
+include "./form_in_php/config.php";
 
 function load_stati() { 
     $dsn = "mysql:host=".DB_HOST.";dbname=".DB_NAME;
