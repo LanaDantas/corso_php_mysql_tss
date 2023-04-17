@@ -52,7 +52,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
                         [
                             'data' => $user_id,
                             'status' => 200,
-                            'details' => "User con ID " + $user_id+" è stato eliminato"
                         ];
             } if ($rows == 0) {
 

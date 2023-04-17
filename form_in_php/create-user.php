@@ -12,7 +12,7 @@ use validator\ValidateMail;
 use validator\ValidateRequired;
 use validator\ValidatorRunner;
 
-require "form_in_php\form_in_php/config.php";
+require "config.php";
 require "./autoload.php";
 // require "./class/Registry/it/Regione.php";
 // require "./class/Registry/it/Provincia.php";
@@ -29,7 +29,6 @@ require "./autoload.php";
      $validatorRunner = new ValidatorRunner([
           'first_name' => new ValidateRequired('','Il Nome è obbligatorio'),
           'last_name'  => new ValidateRequired('','Il Cognome è obbligatorio'),
-          'birthday'  => new ValidateRequired('','La data di nascità non è valida'),
           'birthday'  => new ValidateRequired('','La data di nascità è obbligatoria'),
           'gender'  => new ValidateRequired('','Il Genere è obbligatorio'),
           'birth_city'  => new ValidateRequired('','La città  è obbligatoria'),
