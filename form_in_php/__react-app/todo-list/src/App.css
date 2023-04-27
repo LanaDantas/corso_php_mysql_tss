@@ -10,7 +10,7 @@
 }
 
 body {
-    background-color: black;
+    background-color: rgb(255, 255, 255);
     background-size: cover;
 }
 
@@ -44,7 +44,7 @@ input, select {
     display: none;
 }
 
-h1, h2, h3, h4, h5, h6, li, p {
+h1, h2, h3, h4, h5, h6, li, p, pre {
     color: #fadd05;
 }
 
@@ -81,6 +81,7 @@ border-radius: 15px;
 #todo-form p,
 #edit-form p {
     margin-bottom: 0.5rem;
+    margin-left: 1rem;
     font-weight: bold;
 }
 
@@ -196,7 +197,8 @@ border-radius: 15px;
 }
 
 
-@media screen and (max-width: 1330px) {
+
+/* @media screen and (max-width: 1330px) {
     .form-image {
         display: none;
     }
@@ -229,4 +231,4 @@ border-radius: 15px;
             flex-wrap: nowrap;
         }
     }
-}
+} */
