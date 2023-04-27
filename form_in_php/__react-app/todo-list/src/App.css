@@ -162,13 +162,12 @@ border-radius: 15px;
 
     margin-bottom: 0.5rem;
     background-color: black;
-    width: 50%;
+    width: 100%;
 }
 
-.todo li {
+.todo h3 {
     flex: 1;
-    font-size: 0.9rem;
-    margin-right: 15rem;
+    font-size: 1rem;
 }
 
 .todo button {
@@ -189,13 +188,16 @@ border-radius: 15px;
     margin-bottom: 0.5rem;
     margin-left: 1rem;
     margin-top: 2rem;
-    margin-right: 75%;
-    padding: 0.7rem;
+    margin-right: 70%;
+    padding: 0.8rem;
     border: 1px solid #fadd05;
     border-radius: 1rem;
     flex: 1;
 }
 
+.todo-employee h6 {
+    margin-top: 0.3rem;
+}
 
 
 /* @media screen and (max-width: 1330px) {

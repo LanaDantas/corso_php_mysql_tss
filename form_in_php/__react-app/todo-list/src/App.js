@@ -4,22 +4,34 @@ import TaskList from "./components/TaskList/TaskList";
 import SearchBar from './components/SearchBar';
 import React from 'react';
 import { useState } from 'react';
-import { addTask } from "./service/TodoService";
+import { addTask, removeTask, updateTask } from "./service/TodoService";
 
 
 function App() {
 
   const [taskListData,setTaskListData] = useState([])
 
-
-  const list = taskListData.map(task => <TaskItem key={task.task_id} done={task.done} nome_task={task.name}> </TaskItem>)
- 
   function parentAddTask(newTask) {
     const newTaskListData = addTask(newTask,taskListData)
-    // console.log(newTaskListData)
-
     setTaskListData(newTaskListData)
   }
+
+  function parentRemoveTask(taskId) {
+    const res = removeTask(taskId,taskListData)
+    setTaskListData(res)
+  }
+
+  function parentUpdateStatus(newStatus) {
+    const newStatusData = updateTask(newStatus,taskListData)
+    setTaskListData(newStatusData)
+  }
+
+  const list = taskListData.map(task => <TaskItem key={task.task_id} 
+                                parentRemoveTask={parentRemoveTask}
+                                id={task.id}
+                                done={task.done}
+                                nome_task={task.name}>
+                                </TaskItem>)
  
   return (
     <main>
@@ -28,10 +40,6 @@ function App() {
       <SearchBar parentAddTask={parentAddTask} ></SearchBar>
 
       <TaskList header={'Impiegato 1'} tasks={taskListData}>
-        {list}
-      </TaskList>
-
-      <TaskList header={'Impiegato 2'} tasks={taskListData}>
         {list}
       </TaskList>
 

@@ -14,9 +14,18 @@ const SearchBar = (props) => {
         done:false
       };
 
-      console.log("ciao")
       props.parentAddTask(newTask)
   }
+
+  function onUpdateStatus() {
+    const newStatus = {
+      name: taskName.trim(),
+      due_date: taskDueDate,
+      done:false
+    };
+
+    props.parentUpdateStatus(newStatus)
+}
 
   return (
     <section>
@@ -49,10 +58,13 @@ const SearchBar = (props) => {
                 onChange={evento => setTaskDueDate(evento.target.value)}
                 className="finish-todo" name="date" id="date" />
 
+{!taskName.trim().length>0? 'si':'no'}
+
             <button type="submit"
                 onClick={onAddTask}
+                disabled={!taskName.trim().length>0 ? 'Devi inserire un titolo':''}
                 className="finish-todo">
-                <i className="fa-solid fa-check"></i>
+                <i className="fa-thin fa-plus"></i>
             </button>
           </div>
 
