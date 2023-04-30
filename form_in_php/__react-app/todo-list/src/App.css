@@ -67,19 +67,19 @@ border-radius: 15px;
 }
 
 /* TODO form */
-#todo-form {
+.todo-form {
     display: flex;
     justify-content: space-between;
 }
 
-#todo-form, #edit-form {
+.todo-form, .edit-form {
     padding: 1rem;
     border: 1px solid #fadd05;
     border-radius: 1rem;
 }
 
-#todo-form p,
-#edit-form p {
+.todo-form p,
+.edit-form p {
     margin-bottom: 0.5rem;
     margin-left: 1rem;
     font-weight: bold;
@@ -93,23 +93,21 @@ border-radius: 15px;
     margin-right: 0.3rem;
 }
 
+.todo-input {
+    width: 65%;
+}
+
 #cancel-edit-btn {
     margin-top: 1rem;
 }
 
 /* TODO toolbar */
-
-#toolbar {
+.toolbar {
+    margin-top: 1.2rem;
     padding: 1rem;
     border: 1px solid #fadd05;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
     border-radius: 1rem;
     display: flex;
-}
-
-#toolbar h4 {
-    margin-bottom: .5rem;
 }
 
 #search {
@@ -129,23 +127,34 @@ border-radius: 15px;
     margin-right: 1rem;
 }
 
-#filter {
-    border-right: 1px solid #fadd05;
+.filter {
     padding-right: 1rem;
-    margin-right: 1rem;
+    margin-right: 7rem;
+    margin-left: 1rem;
+    justify-content: space-between;
     width: 25%;
     display: flex;
-    flex-direction: column;
 }
 
-#filter select {
+.todo-all, .todo-active, .todo-completed {
+    margin-top: 1.2rem;
+    width: 70%;
+    height: 60%;
+    margin-left: 1rem;
     flex: 1;
+    
 }
 
-#date-filter {
+.filter h4 {
+    margin-top: 1.5rem;
+    margin-left: 0.2rem;
+
+}
+
+.date-filter {
+    margin-left: 8rem;
     padding-right: 1rem;
-    margin-right: 1rem;
-    width: 100%;
+    justify-content: space-between;
     display: flex;
     flex-direction:column;
 }
@@ -159,8 +168,8 @@ border-radius: 15px;
     border: 1px solid #fadd05;
     border-radius: 1rem;
     transition: .3s;
-
     margin-bottom: 0.5rem;
+    margin-top: 1rem;
     background-color: black;
     width: 100%;
 }
@@ -178,17 +187,14 @@ border-radius: 15px;
     background-color: #fadd05;
 }
 
-.done li {
+.done h3 {
     color: black;
     text-decoration: line-through;
     font-style: italic;
 }
 
 .todo-employee {
-    margin-bottom: 0.5rem;
-    margin-left: 1rem;
-    margin-top: 2rem;
-    margin-right: 70%;
+    margin-right: 74%;
     padding: 0.8rem;
     border: 1px solid #fadd05;
     border-radius: 1rem;
@@ -199,6 +205,43 @@ border-radius: 15px;
     margin-top: 0.3rem;
 }
 
+/* Avatar */
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@500&display=swap');
+
+.avatar {
+    border: 1px solid #fadd05;
+    display: flex;
+    align-items: center;
+    border-radius: 32px 32px;
+    margin-bottom: 1rem;
+    background-color: rgba(78, 234, 255, 0.099);
+}
+
+.avatar__user {
+    font-family: 'Inknut Antiqua', serif;
+    color: #fadd05;
+}
+
+.avatar__img {
+    border-radius: 50%;
+    width: 64px;
+    margin-right: 1rem;
+}
+
+.avatar--s > .avatar__img {
+    width: 32px;
+    margin-right: 0.5rem;
+}
+
+.avatar--m > .avatar__img {
+    width: 42px;
+    margin-right: 0.5rem;
+}
+
+.avatar--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 
 /* @media screen and (max-width: 1330px) {
     .form-image {

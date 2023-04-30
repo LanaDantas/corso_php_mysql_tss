@@ -1,5 +1,5 @@
+import React from 'react';
 import { useState } from 'react';
-// import "../App.css"
 
 
 const SearchBar = (props) => {
@@ -17,35 +17,17 @@ const SearchBar = (props) => {
       props.parentAddTask(newTask)
   }
 
-  function onUpdateStatus() {
-    const newStatus = {
-      name: taskName.trim(),
-      due_date: taskDueDate,
-      done:false
-    };
-
-    props.parentUpdateStatus(newStatus)
-}
-
   return (
     <section>
-      <div className="todo-container">
 
-        <pre>
+{/*         <pre>
             {taskName}
             {taskDueDate}
-        </pre>
-
+        </pre> */}
 
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
             integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
             crossOrigin="anonymous" referrerPolicy="no-referrer" />
-
-          {/* <label className="tasks" htmlFor="task-label"></label> */}
-
-        <header>
-            <h1 className="h1-title">TODO List</h1>
-        </header>
 
         <div id="todo-form" className="todo-form">
             <p>Aggiungi task</p>
@@ -58,18 +40,15 @@ const SearchBar = (props) => {
                 onChange={evento => setTaskDueDate(evento.target.value)}
                 className="finish-todo" name="date" id="date" />
 
-{!taskName.trim().length>0? 'si':'no'}
+                  {!taskName.trim().length>0? 'si':'no'}
 
             <button type="submit"
                 onClick={onAddTask}
-                disabled={!taskName.trim().length>0 ? 'Devi inserire un titolo':''}
-                className="finish-todo">
+                disabled={!taskName.trim().length>0 ? 'Devi inserire un titolo':''}>
                 <i className="fa-thin fa-plus"></i>
             </button>
           </div>
-
         </div>
-      </div>
     </section>
 
   )

@@ -1,15 +1,15 @@
+import React from 'react';
 
 
-function TaskItem({ nome_task, done, id, parentRemoveTask, parentUpdateStatus }) {
+function TaskItem({ filteredTodos, nome_task, done, id, parentRemoveTask, parentCompleteTask }) {
 
     function onRemoveTask() {
         parentRemoveTask(id)
     }
 
-    function onUpdateStatus() {
-        parentUpdateStatus(id)
+    function onCompleteTask() {
+        parentCompleteTask(id)
     }
-
 
     return (
         <>
@@ -18,18 +18,21 @@ function TaskItem({ nome_task, done, id, parentRemoveTask, parentUpdateStatus })
                 crossOrigin="anonymous" referrerPolicy="no-referrer" />
 
             <div className="todo-list">
-                <li className="todo">
+                <li className={`todo ${done ? "done" : ""}`}>
                     <h3>{nome_task}</h3>
-                <button className="finish-todo" onChange={onUpdateStatus} checked={done}>
-                    {done}
-                    <i className="fa-solid fa-check"></i>
-                </button>
-                <button className="edit-todo">
-                    <i className="fa-solid fa-pen"></i>
-                </button>
-                <button className="remove-todo" onClick={onRemoveTask}>
-                    <i className="fa-solid fa-xmark"></i>
-                </button>
+                    <button className="finish-todo" onClick={ onCompleteTask }>
+                        <i className="fa-solid fa-check"></i>
+                    </button>
+
+                        {done ? null : (
+                    <button className="edit-todo">
+                        <i className="fa-solid fa-pen"></i>
+                    </button>
+                        )}
+                        
+                    <button className="remove-todo" onClick={onRemoveTask}>
+                        <i className="fa-solid fa-xmark"></i>
+                    </button>
                 </li>
             </div>
         </>
